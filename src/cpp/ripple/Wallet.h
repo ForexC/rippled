@@ -24,6 +24,7 @@ class Wallet
 private:
 	bool	nodeIdentityLoad();
 	bool	nodeIdentityCreate();
+	bool	nodeIdentityCreateDummy();
 
 	Wallet(const Wallet&); // no implementation
 	Wallet& operator=(const Wallet&); // no implementation
@@ -44,6 +45,7 @@ public:
 	// Begin processing.
 	// - Maintain peer connectivity through validation and peer management.
 	void start();
+	void startStandalone();
 
 	const RippleAddress&	getNodePublic() const { return mNodePublicKey; }
 	const RippleAddress&	getNodePrivate() const { return mNodePrivateKey; }

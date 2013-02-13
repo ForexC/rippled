@@ -155,7 +155,10 @@ void Application::setup()
 	// Begin validation and ip maintenance.
 	// - Wallet maintains local information: including identity and network connection persistence information.
 	//
-	mWallet.start();
+	if (theConfig.RUN_STANDALONE)
+		mWallet.startStandalone();
+	else
+		mWallet.start();
 
 	//
 	// Set up UNL.
@@ -318,8 +321,7 @@ void Application::startNewLedger()
 {
 	// New stuff.
 	RippleAddress	rootSeedMaster		= RippleAddress::createSeedGeneric("masterpassphrase");
-	RippleAddress	rootGeneratorMaster	= RippleAddress::createGeneratorPublic(rootSeedMaster);
-	RippleAddress	rootAddress			= RippleAddress::createAccountPublic(rootGeneratorMaster, 0);
+	RippleAddress	rootAddress			= RippleAddress::createAccountID("rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh");
 
 	// Print enough information to be able to claim root account.
 	cLog(lsINFO) << "Root master seed: " << rootSeedMaster.humanSeed();
