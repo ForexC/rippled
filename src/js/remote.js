@@ -331,6 +331,22 @@ Remote.online_states = [
   'full'
 ];
 
+/**
+ * Retry schedule.
+ *
+ * First, for 2 seconds: 20 times per second
+ * Then, for 1 minute: once per second
+ * Then, for 10 minutes: once every 10 seconds
+ * Then: once every 30 seconds
+ */
+
+Remote.retry_intervals = [
+   1000/20, 40,
+   1000   , 40+60,
+  10000   , 40+60+60,
+  30000
+];
+
 // Inform remote that the remote server is not comming back.
 Remote.prototype.server_fatal = function () {
   this._server_fatal = true;
@@ -426,6 +442,15 @@ Remote.prototype._connect_retry = function () {
   {
     // Delay and retry.
     this.retry        += 1;
+
+    // Find retry delay
+    var i = 0, ri = Remote.retry_intervals, delay;
+    for (;;) {
+      delay = ri[i];
+      if (!ri[i+1] || this.retry < ri[i+1]) break;
+      i += 2;
+    }
+
     this.retry_timer  =  setTimeout(function () {
         if (self.trace) console.log("remote: retry");
 
@@ -440,13 +465,7 @@ Remote.prototype._connect_retry = function () {
         else {
           self._connect_retry();
         }
-      }, this.retry < 40
-          ? 1000/20           // First, for 2 seconds: 20 times per second
-          : this.retry < 40+60
-            ? 1000            // Then, for 1 minute: once per second
-            : this.retry < 40+60+60
-              ? 10*1000       // Then, for 10 minutes: once every 10 seconds
-              : 30*1000);     // Then: once every 30 seconds
+      }, delay);
   }
 };
 

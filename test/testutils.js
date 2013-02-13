@@ -98,6 +98,8 @@ var build_setup = function (opts, host) {
                         .start();
       },
       function connectWebsocketStep(callback) {
+        // Faster retry
+        Remote.retry_intervals[0] = 5;
         self.remote = data.remote =
           Remote
             .from_config(host, !!opts.verbose_ws)
