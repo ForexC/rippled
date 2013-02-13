@@ -100,9 +100,10 @@ Server.prototype._serverSpawnSync = function() {
 
   var args  = [
       "-a",
-      "-v",
       "--conf=rippled.cfg"
     ];
+
+  if (!this.quiet) args.push('-v');
 
   // Spawn in standalone mode for now.
   this.child = child.spawn(
