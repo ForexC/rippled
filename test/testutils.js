@@ -101,7 +101,7 @@ var build_setup = function (opts, host) {
         self.remote = data.remote =
           Remote
             .from_config(host, !!opts.verbose_ws)
-            .once('ledger_closed', callback)
+            .once('connect', callback)
             .connect();
       }
     ], done);
