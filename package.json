@@ -13,14 +13,14 @@
   },
 
   "dependencies": {
-    "async": "~0.1.22",
-    "ws": "~0.4.22",
-    "extend": "~1.1.1",
+    "async": "~2.1.2",
+    "ws": "~1.1.1",
+    "extend": "~3.0.0",
     "simple-jsonrpc": "~0.0.1"
   },
   "devDependencies": {
-    "buster": "~0.6.2",
-    "grunt-webpack": "~0.4.0"
+    "buster": "~0.7.18",
+    "grunt-webpack": "~1.0.18"
   },
 
   "scripts": {
